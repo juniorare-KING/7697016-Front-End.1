@@ -1,25 +1,46 @@
 <!DOCTYPE html>
 <html lang="fr">
-	<head>
-		<meta charset="utf-8">
-		<title>Les Bonnes Pièces</title>
-		<link rel="stylesheet" href="styles.css">
-		<script type="module" src="pieces.js"></script>
-	</head>
-	<body>
-		<header>
-			<img src="images/logo-les-bonnes-pieces.png" alt="LOGO">
-			<h1>Les Bonnes Pièces</h1>
-		</header>
-		<main>
-			<!-- Menu de recherche -->
-			<section class="filtres">
-				<h3>Filtres</h3>
-			</section>
+  <head>
+    <meta charset="utf-8" />
+    <title>Les Bonnes Pièces</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script type="module" src="pieces.js"></script>
+  </head>
+  <body>
+    <header>
+      <img src="images/logo-les-bonnes-pieces.png" alt="LOGO" />
+      <h1>Les Bonnes Pièces</h1>
+    </header>
+    <main>
+      <!-- Menu de recherche -->
+      <section class="filtres">
+        <h3>Filtres</h3>
+        <button class="btn-trier">Trier par prix croissant</button>
+        <br />
+        <button class="btn-filtrer">Filtrer les pièces non abordables</button>
+        <br />
+        <button class="btn-description">Afficher les descriptions</button>
+        <br />
+        <button class="btn-trier-decroissant">
+          Trier par prix décroissant
+        </button>
+        <br />
+        <!-- barre de filtrage des prix -->
+        <label for="prix-max"
+          >Prix maximum : <span id="affichage">5</span></label
+        >
+        <input type="range" id="prix-max" min="0" max="60" value="5" step="5" />
+      </section>
 
-			<!-- Fiches produits -->
-			<section class="fiches">
-			</section>
-		</main>
-	</body>
+      <!-- Fiches produits -->
+      <section class="fiches">
+        <div class="abordables">
+          <p>Pièces abordables :</p>
+        </div>
+        <div class="disponibles">
+          <p>Pièces disponibles :</p>
+        </div>
+      </section>
+    </main>
+  </body>
 </html>
