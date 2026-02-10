@@ -1,6 +1,27 @@
-// Récupération des pièces depuis le fichier JSON
-const reponse = await fetch("pieces-autos.json");
-const pieces = await reponse.json();
+// importation de la fonction d'ajout des écouteurs d'événements pour les avis
+import {
+  ajoutListenersAvis,
+  ajoutListenersEnvoyerAvis,
+  afficherAvis,
+} from "./avis.js";
+
+// vérification d'éventuels pieces dans le localStorage
+let pieces = localStorage.getItem("pieces");
+if (pieces === null) {
+  // Récupération des pièces depuis l'API
+  const reponse = await fetch("http://localhost:8081/pieces");
+  pieces = await reponse.json();
+  // Transformer les pieces en JSON
+  const valeurPieces = JSON.stringify(pieces);
+  // Envoyer les données dans le localStorage
+  localStorage.setItem("pieces", valeurPieces);
+} else {
+  // Si des pièces sont présentes dans le localStorage, les convertir en objet JavaScript
+  pieces = JSON.parse(pieces);
+}
+
+// on appelle la fonction pour ajouter le listener au formulaire
+ajoutListenersEnvoyerAvis();
 
 // fonction d'affichage des pieces
 function genererPieces(pieces) {
@@ -29,6 +50,10 @@ function genererPieces(pieces) {
     disponibiliteElement.innerText = pieces[i].disponibilite
       ? "En stock"
       : "Rupture de stock";
+    //ajout code boutton avis client
+    const avisBouton = document.createElement("button");
+    avisBouton.dataset.id = pieces[i].id;
+    avisBouton.textContent = "Afficher les avis ";
     //rattachement de l'arcticle au DOM
     pieceElement.appendChild(imageElement);
     pieceElement.appendChild(nomElement);
@@ -36,14 +61,27 @@ function genererPieces(pieces) {
     pieceElement.appendChild(categorieElement);
     pieceElement.appendChild(descriptionElement);
     pieceElement.appendChild(disponibiliteElement);
+    pieceElement.appendChild(avisBouton);
     sectionFiches.appendChild(pieceElement);
-    // On rattache la balise article au body
   }
+  // Ajout des écouteurs d'événements pour les avis après la génération des pièces
+  ajoutListenersAvis();
 }
 
 // Premier affichage de la page
 genererPieces(pieces);
 
+// boucle pour afficher les avis de chaque pièce à partir du localStorage
+for (let i = 0; i < pieces.length; i++) {
+  const avisStockes = localStorage.getItem(`avis-piece-${pieces[i].id}`);
+  const avis = JSON.parse(avisStockes);
+  if (avis !== null) {
+    const pieceElement = document.querySelector(
+      `article[data-id="${pieces[i].id}"]`,
+    );
+    afficherAvis(pieceElement, avis);
+  }
+}
 // Ajout des fonctionnalités de tri croissant et de filtrage
 const boutonTrier = document.querySelector(".btn-trier");
 boutonTrier.addEventListener("click", () => {
@@ -63,7 +101,7 @@ boutonFiltrer.addEventListener("click", () => {
   const piecesFiltrees = pieces.filter(function (piece) {
     return piece.prix <= 35;
   });
-   // ✅ AJOUTÉ : Réaffichage
+  // ✅ AJOUTÉ : Réaffichage
   document.querySelector(".fiches").innerHTML = "";
   genererPieces(piecesFiltrees);
   console.log(piecesFiltrees);
@@ -74,7 +112,7 @@ boutonDescription.addEventListener("click", () => {
   const piecesFiltrees = pieces.filter(function (piece) {
     return piece.description !== undefined;
   });
-   // ✅ AJOUTÉ : Réaffichage
+  // ✅ AJOUTÉ : Réaffichage
   document.querySelector(".fiches").innerHTML = "";
   genererPieces(piecesFiltrees);
   console.log(piecesFiltrees);
@@ -128,14 +166,14 @@ document.querySelector(".abordables").appendChild(abordablesElement);
 // Etape 1 : filtrer les pièces disponibles et récupérer leurs noms
 const disponibles = pieces
   .filter((piece) => piece.disponibilite)
-  .map((piece) => ({ nom: piece.nom, prix: piece.prix }))
+  .map((piece) => ({ nom: piece.nom, prix: piece.prix }));
 console.log(disponibles);
 // Etape 2 : créer la liste des pièces disponibles
 const disponiblesElement = document.createElement("ul");
 for (let i = 0; i < disponibles.length; i++) {
   const nomElementDisponible = document.createElement("li");
   nomElementDisponible.innerText =
-    disponibles[i].nom + " - " + pieces[i].prix + " €";
+    disponibles[i].nom + " - " + disponibles[i].prix + " €";
   disponiblesElement.appendChild(nomElementDisponible);
 }
 // Etape 3 : ajouter l'en-tête puis la liste dans la div classée "disponibles"
@@ -149,15 +187,22 @@ const affichagePrixMax = document.getElementById("affichage");
 const barrePrixMax = document.getElementById("prix-max");
 
 barrePrixMax.addEventListener("input", () => {
-affichagePrixMax.innerText = barrePrixMax.value;
+  affichagePrixMax.innerText = barrePrixMax.value;
 });
 //filtrage des pièces selon le prix maximum
 barrePrixMax.addEventListener("change", () => {
   const piecesFiltreesPrixMax = pieces.filter(function (piece) {
     return piece.prix <= barrePrixMax.value;
   });
-   // ✅ AJOUTÉ : Réaffichage
+  // ✅ AJOUTÉ : Réaffichage
   document.querySelector(".fiches").innerHTML = "";
   genererPieces(piecesFiltreesPrixMax);
   console.log(piecesFiltreesPrixMax);
-})
+});
+
+// Ajout du listener pour mettre à jour des données du localStorage
+const boutonMaj = document.querySelector(".btn-maj");
+boutonMaj.addEventListener("click", () => {
+  // supprimer les données existantes dans le localStorage
+  localStorage.removeItem("pieces");
+});
