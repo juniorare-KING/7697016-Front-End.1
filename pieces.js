@@ -1,8 +1,11 @@
+
 // importation de la fonction d'ajout des écouteurs d'événements pour les avis
 import {
   ajoutListenersAvis,
   ajoutListenersEnvoyerAvis,
   afficherAvis,
+  afficherGraphiqueAvis,
+  afficherGraphiqueDisponibilite,
 } from "./avis.js";
 
 // vérification d'éventuels pieces dans le localStorage
@@ -30,9 +33,22 @@ function genererPieces(pieces) {
     const sectionFiches = document.querySelector(".fiches");
     //creation d'une balise article pour chaque piece
     const pieceElement = document.createElement("article");
+    pieceElement.dataset.id = pieces[i].id; // permet de retrouver l'article plus tard
     //remplissage de la balise article
     const imageElement = document.createElement("img");
     imageElement.src = pieces[i].image;
+    imageElement.alt = pieces[i].nom;
+    // si l'image ne se charge pas (fichier manquant) on affiche un placeholder svg
+    imageElement.onerror = () => {
+      imageElement.src =
+        "data:image/svg+xml;charset=UTF-8," +
+        encodeURIComponent(
+          '<svg xmlns="http://www.w3.org/2000/svg" width="200" height="150">' +
+            '<rect width="100%" height="100%" fill="%23ccc"/>' +
+            '<text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="%23666" font-size="14">Pas d\'image</text>' +
+            "</svg>",
+        );
+    };
     const nomElement = document.createElement("h2");
     nomElement.innerText = pieces[i].nom;
     const prixElement = document.createElement("p");
@@ -186,6 +202,13 @@ document.querySelector(".disponibles").appendChild(disponiblesElement);
 const affichagePrixMax = document.getElementById("affichage");
 const barrePrixMax = document.getElementById("prix-max");
 
+// ajuster la plage du slider en fonction des prix réels des pièces
+const maxPrix = Math.max(...pieces.map((p) => p.prix));
+barrePrixMax.max = Math.ceil(maxPrix / 5) * 5; // arrondir à la dizaine supérieure
+// optionnel: définir la valeur initiale à la limite supérieure pour afficher toutes les pièces
+barrePrixMax.value = barrePrixMax.max;
+affichagePrixMax.innerText = barrePrixMax.value;
+
 barrePrixMax.addEventListener("input", () => {
   affichagePrixMax.innerText = barrePrixMax.value;
 });
@@ -206,3 +229,8 @@ boutonMaj.addEventListener("click", () => {
   // supprimer les données existantes dans le localStorage
   localStorage.removeItem("pieces");
 });
+
+// afficher les graphiques d'avis
+await afficherGraphiqueAvis();
+// nouveau graphique comparant commentaires selon disponibilité
+await afficherGraphiqueDisponibilite();

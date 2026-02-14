@@ -1,46 +1,90 @@
 [
-    {
-        "id": 1,
-        "nom": "Ampoule LED",
-        "prix": 60,
-        "categorie": "Optiques",
-        "image": "images/ampoule-led.png",
-        "description": "Distance d'éclarage : 100m !",
-        "disponibilite": true
-    },
-    {
-        "id": 2,
-        "nom": "Plaquettes de frein (x4)",
-        "prix": 40,
-        "categorie": "Freinage",
-        "image": "images/plaquettes-frein.png",
-        "description": "Une qualté de freinage optimale, par tous les temps.",
-        "disponibilite": true
-    },
-    {
-        "id": 3,
-        "nom": "Ampoule boîte à gants",
-        "prix": 5.49,
-        "categorie": "Optiques",
-        "image": "images/ampoule-boite-a-gants.png",
-        "description": "Pour y voir clair dans l'habitacle.",
-        "disponibilite": false
-
-    },
-    {
-        "id": 4,
-        "nom": "Liquide de frein",
-        "prix": 9.60,
-        "categorie": "Freinage",
-        "image": "images/liquide-frein.png",
-        "disponibilite": true
-    },
-    {
-        "id": 5,
-        "nom": "Balai d'essuie-glace",
-        "prix": 29.10,
-        "image": "images/balai-essuie-glace.png",
-        "description": "Performance d'essuyage au top ! Longueur : 550mm.",
-       "disponibilite":true
-    }
+  {
+    "id": 1,
+    "nom": "Ampoule LED",
+    "prix": 60,
+    "categorie": "Optiques",
+    "image": "images/ampoule-led.png",
+    "description": "Distance d'éclarage : 100m !",
+    "disponibilite": true
+  },
+  {
+    "id": 2,
+    "nom": "Plaquettes de frein (x4)",
+    "prix": 40,
+    "categorie": "Freinage",
+    "image": "images/plaquettes-frein.png",
+    "description": "Une qualté de freinage optimale, par tous les temps.",
+    "disponibilite": true
+  },
+  {
+    "id": 3,
+    "nom": "Ampoule boîte à gants",
+    "prix": 5.49,
+    "categorie": "Optiques",
+    "image": "images/ampoule-boite-a-gants.png",
+    "description": "Pour y voir clair dans l'habitacle.",
+    "disponibilite": false
+  },
+  {
+    "id": 4,
+    "nom": "Liquide de frein",
+    "prix": 9.6,
+    "categorie": "Freinage",
+    "image": "images/liquide-frein.png",
+    "disponibilite": true
+  },
+  {
+    "id": 5,
+    "nom": "Balai d'essuie-glace",
+    "prix": 29.1,
+    "image": "images/balai-essuie-glace.png",
+    "description": "Performance d'essuyage au top ! Longueur : 550mm.",
+    "disponibilite": true
+  },
+  {
+    "id": 6,
+    "nom": "Filtre à air",
+    "prix": 15.0,
+    "categorie": "Entretien",
+    "image": "images/filtre-air.png",
+    "description": "Assure un flux d'air propre pour le moteur.",
+    "disponibilite": true
+  },
+  {
+    "id": 7,
+    "nom": "Bougie d'allumage",
+    "prix": 8.2,
+    "categorie": "Moteur",
+    "image": "images/bougie-allumage.png",
+    "description": "Allumage fiable et puissance constante.",
+    "disponibilite": true
+  },
+  {
+    "id": 8,
+    "nom": "Courroie de distribution",
+    "prix": 120.0,
+    "categorie": "Moteur",
+    "image": "images/courroie-distribution.png",
+    "description": "Indispensable pour la synchronisation moteur.",
+    "disponibilite": false
+  },
+  {
+    "id": 9,
+    "nom": "Radiateur",
+    "prix": 250.0,
+    "categorie": "Refroidissement",
+    "image": "images/radiateur.png",
+    "description": "Évite la surchauffe du moteur.",
+    "disponibilite": true
+  },
+  {
+    "id": 10,
+    "nom": "Alternateur",
+    "prix": 180.0,
+    "categorie": "Électrique",
+    "image": "images/alternateur.png",
+    "description": "Charge la batterie et alimente l'électronique.",
+    "disponibilite": true
+  }
 ]

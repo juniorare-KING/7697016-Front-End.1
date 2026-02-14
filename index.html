@@ -1,9 +1,14 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
   <head>
     <meta charset="utf-8" />
     <title>Les Bonnes Pièces</title>
     <link rel="stylesheet" href="styles.css" />
+    <!-- Chart.js must be loaded before our module so that the global `Chart` is defined -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js"
+      defer
+    ></script>
     <script type="module" src="pieces.js"></script>
   </head>
   <body>
@@ -30,20 +35,27 @@
           >Prix maximum : <span id="affichage">5</span></label
         >
         <input type="range" id="prix-max" min="0" max="60" value="5" step="5" />
-        
+
         <!-- formulaire d'ajout d'avis -->
         <h3>Ajouter un avis</h3>
-				<form class="formulaire-avis">
-					Identifiant de la pièce :<br>
-					<input type="number" name="piece-id"><br>
-					Nom d'utilisateur :<br>
-					<input type="text" name="utilisateur"><br>
-					Avis :<br>
-					<input type="text" name="commentaire"><br>
-          Note :<br>
-          <input type="number" name="etoiles" min="1" max="5"><br><br>
-					<button>Envoyer</button>
-				</form>
+        <canvas id="graphique-avis" width="300" height="300"></canvas>
+        <canvas
+          id="graphique-disponibilite"
+          width="300"
+          height="300"
+          style="margin-top: 1rem"
+        ></canvas>
+        <form class="formulaire-avis">
+          Identifiant de la pièce :<br />
+          <input type="number" name="piece-id" /><br />
+          Nom d'utilisateur :<br />
+          <input type="text" name="utilisateur" /><br />
+          Avis :<br />
+          <input type="text" name="commentaire" /><br />
+          Note :<br />
+          <input type="number" name="etoiles" min="1" max="5" /><br /><br />
+          <button>Envoyer</button>
+        </form>
         <!-- bouton de mis à jour des pieces-->
         <h3>Données</h3>
         <button class="btn-maj">Mettre à jour les pièces</button>
